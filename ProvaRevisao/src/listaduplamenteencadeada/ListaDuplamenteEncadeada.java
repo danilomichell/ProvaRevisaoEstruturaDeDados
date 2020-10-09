@@ -72,6 +72,8 @@ public class ListaDuplamenteEncadeada<T> {
         } else {
             if (tamanho() == 1) {
                 limpa();
+            } else if (posicao >= tamanho() - 1) {
+                removeFim();
             } else {
                 Iterador it = new Iterador(this.inicio);
                 int i = 0;
@@ -123,19 +125,24 @@ public class ListaDuplamenteEncadeada<T> {
             Iterador iti = new Iterador(this.inicio);
             Iterador itj = new Iterador(this.inicio);
             int i = 0;
+
             while (iti.hasNext() && i < tamanho()) {
-                itj = new Iterador(this.inicio);
+                boolean achou = false;
                 int j = 0;
+                itj = new Iterador(this.inicio);            
                 while (itj.hasNext() && j < tamanho()) {
                     if (((itj.getAtual().getElemento() == iti.getAtual().getElemento()) && i != j)) {
-                        remove(j);
+                        remove(j);                   
+                        achou = true;
                         break;
                     }
                     itj.next();
                     j++;
                 }
-                iti.next();
-                i++;
+                if (achou == false) {
+                    iti.next();
+                    i++;
+                }
             }
         }
     }
